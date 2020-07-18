@@ -1,13 +1,19 @@
 import React from "react";
 import {} from "@auth0/auth0-react";
 import styled from "styled-components";
-// import loginImg from "../images/login-img.svg";
+import loginImg from "../images/login-img.svg";
 
 const Login = () => {
   return (
-    <Wrapper>
-      <h1>Login Page</h1>
-    </Wrapper>
+    <div className='login__img'>
+      <Wrapper>
+        <div className='container'>
+          <img src={loginImg} alt='github user' />
+          <h1>Github User</h1>
+          <button className='btn'>Login</button>
+        </div>
+      </Wrapper>
+    </div>
   );
 };
 

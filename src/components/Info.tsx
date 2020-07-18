@@ -1,13 +1,14 @@
-import React from "react";
-// import { GithubContext } from "../context/context";
+import React, { useContext } from "react";
+import { GithubContext } from "../context/context";
 import styled from "styled-components";
 // import { GoRepo, GoGist } from "react-icons/go";
 // import { FiUsers, FiUserPlus } from "react-icons/fi";
 
-const Info = () => {
+const Info: React.FC = () => {
+  const data = useContext(GithubContext);
   return (
     <Wrapper>
-      <h2>github users info</h2>
+      <h2>github users info {data}</h2>
     </Wrapper>
   );
 };
