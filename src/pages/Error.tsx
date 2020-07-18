@@ -17,14 +17,15 @@ const Error = () => {
 const Wrapper = styled.section`
   min-height: 100vh;
   display: grid;
-  text-align: center;
+  place-items: center;
   background: var(--clr-primary-10);
+  text-align: center;
   h1 {
     font-size: 10rem;
   }
   h3 {
-    margin-bottom: 1.5rem;
     color: var(--clr-grey-3);
+    margin-bottom: 1.5rem;
   }
 `;
 
