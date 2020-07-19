@@ -6,11 +6,25 @@ import sumLanguages from "./utils/Languages.js";
 
 const Repos = () => {
   const { githubRepos } = useContext(GithubContext);
-  let languages = sumLanguages(githubRepos);
-  languages = Object.values(languages)
+  const languages = sumLanguages(githubRepos);
+  const mostUsed = Object.values(languages)
     .sort((a: any, b: any) => b.value - a.value)
+    .map((item: any) => {
+      return { label: item.label, value: item.value };
+    })
     .slice(0, 5);
 
+  const mostStars = Object.values(languages)
+    .sort((a: any, b: any) => {
+      return b.stars - a.stars;
+    })
+    .map((item) => {
+      //@ts-ignore
+      return { label: item.label, value: item.stars };
+    })
+    .slice(0, 5);
+
+  console.log(mostStars);
   const chartData: { label: string; value: string }[] = [
     {
       label: "HTML",
@@ -28,9 +42,9 @@ const Repos = () => {
   return (
     <section className='section'>
       <Wrapper className='section-center'>
-        <Pie3D data={languages} />
+        <Pie3D data={mostUsed} />
         <div></div>
-        <Doughnut2D data={chartData} />
+        <Doughnut2D data={mostStars} />
       </Wrapper>
     </section>
   );

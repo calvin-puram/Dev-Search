@@ -2,7 +2,7 @@ import React from "react";
 import ReactFC from "react-fusioncharts";
 import FusionCharts from "fusioncharts";
 import Column2D from "fusioncharts/fusioncharts.charts";
-import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+import FusionTheme from "fusioncharts/themes/fusioncharts.theme.candy";
 ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 
 type ChartData = {
@@ -21,6 +21,7 @@ const Doughnut2d: React.FC<ChartData> = (props: ChartData) => {
         decimals: 0,
         doughnutRadius: "45%",
         showPercentValues: 0,
+        theme: "candy",
       },
       data: props.data,
     },
