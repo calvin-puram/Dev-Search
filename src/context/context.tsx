@@ -10,17 +10,13 @@ type Props = {
   children: React.ReactNode;
 };
 
-export type StateValue = {
-  githubUser: object;
-  githubRepos: any[];
-  githubFollowers: any[];
-};
-
 const GithubContext = createContext({
   githubUser: mockUser,
   githubRepos: mockRepos,
   githubFollowers: mockFollowers,
   requests: 60,
+  error: { show: false, msg: "" },
+  loading: false,
 });
 
 const GithubProvider = (props: Props) => {
@@ -28,14 +24,38 @@ const GithubProvider = (props: Props) => {
   const [githubRepos, setGithubRepos] = useState(mockRepos);
   const [githubFollowers, setGithubFollowers] = useState(mockFollowers);
   const [requests, setRequest] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({ show: false, msg: "" });
 
   const checkRequest = async () => {
     const req = await axios.get(`${rootUrl}/rate_limit`);
     const { remaining } = req.data.rate;
     setRequest(remaining);
     if (remaining === 0) {
-      //throw error
+      toggleError(true, "you have exceeded tour hourly limit!");
     }
+  };
+
+  const toggleError = (show: boolean, msg: string) => {
+    setError({ show, msg });
+  };
+
+  const getGithubUser = async (user: string) => {
+    toggleError(false, "");
+    setLoading(true);
+    checkRequest();
+    try {
+      const res = await axios.get(`${rootUrl}/users/${user}`);
+      if (res.data) {
+        setGithubUser(res.data);
+      }
+    } catch (err) {
+      if (err.response.data.message) {
+        toggleError(true, "no user with that username");
+      }
+    }
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -43,7 +63,16 @@ const GithubProvider = (props: Props) => {
   }, []);
   return (
     <GithubContext.Provider
-      value={{ githubUser, githubRepos, githubFollowers, requests }}
+      value={{
+        githubUser,
+        githubRepos,
+        githubFollowers,
+        requests,
+        error,
+        //@ts-ignore
+        getGithubUser,
+        loading,
+      }}
     >
       {props.children}
     </GithubContext.Provider>
