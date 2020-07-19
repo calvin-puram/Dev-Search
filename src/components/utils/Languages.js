@@ -1,4 +1,4 @@
-export default (githubRepos) => {
+export const calLanguage = (githubRepos) => {
   return githubRepos.reduce((total, repo) => {
     let { language, stargazers_count } = repo;
     if (!language) return total;
@@ -18,4 +18,19 @@ export default (githubRepos) => {
 
     return total;
   }, {});
+};
+
+export const getStarsForked = (githubRepos) => {
+  return githubRepos.reduce(
+    (total, repo) => {
+      const { stargazers_count, name, forks } = repo;
+      total.stars[stargazers_count] = { label: name, value: stargazers_count };
+      total.forks[forks] = { label: name, value: forks };
+      return total;
+    },
+    {
+      forks: {},
+      stars: {},
+    }
+  );
 };

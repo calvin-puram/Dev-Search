@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { GithubContext } from "../context/context";
 import { Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
-import sumLanguages from "./utils/Languages.js";
+import { calLanguage, getStarsForked } from "./utils/Languages.js";
 
 const Repos = () => {
   const { githubRepos } = useContext(GithubContext);
-  const languages = sumLanguages(githubRepos);
+  const languages = calLanguage(githubRepos);
   const mostUsed = Object.values(languages)
     .sort((a: any, b: any) => b.value - a.value)
     .map((item: any) => {
@@ -24,27 +24,18 @@ const Repos = () => {
     })
     .slice(0, 5);
 
-  console.log(mostStars);
-  const chartData: { label: string; value: string }[] = [
-    {
-      label: "HTML",
-      value: "20",
-    },
-    {
-      label: "CSS",
-      value: "13",
-    },
-    {
-      label: "Javascript",
-      value: "10",
-    },
-  ];
+  // most forked and star repo
+  let { forks, stars } = getStarsForked(githubRepos);
+  stars = Object.values(stars).slice(-5).reverse();
+  forks = Object.values(forks).slice(-5).reverse();
+
   return (
     <section className='section'>
       <Wrapper className='section-center'>
         <Pie3D data={mostUsed} />
-        <div></div>
+        <Column3D data={stars} />
         <Doughnut2D data={mostStars} />
+        <Bar3D data={forks} />
       </Wrapper>
     </section>
   );
