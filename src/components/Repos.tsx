@@ -1,13 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-// import { GithubContext } from "../context/context";
-// import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
+import { GithubContext } from "../context/context";
+import { Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
+import sumLanguages from "./utils/Languages.js";
 
 const Repos = () => {
+  const { githubRepos } = useContext(GithubContext);
+  let languages = sumLanguages(githubRepos);
+  languages = Object.values(languages)
+    .sort((a: any, b: any) => b.value - a.value)
+    .slice(0, 5);
+
+  const chartData: { label: string; value: string }[] = [
+    {
+      label: "HTML",
+      value: "20",
+    },
+    {
+      label: "CSS",
+      value: "13",
+    },
+    {
+      label: "Javascript",
+      value: "10",
+    },
+  ];
   return (
-    <Wrapper>
-      <h2>Repos of users</h2>
-    </Wrapper>
+    <section className='section'>
+      <Wrapper className='section-center'>
+        <Pie3D data={languages} />
+        <div></div>
+        <Doughnut2D data={chartData} />
+      </Wrapper>
+    </section>
   );
 };
 
