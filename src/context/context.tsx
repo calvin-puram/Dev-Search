@@ -67,7 +67,8 @@ const GithubProvider = (props: Props) => {
 
   useEffect(() => {
     checkRequest();
-  }, []);
+    // eslint-disable-next-line
+  }, [requests]);
   return (
     <GithubContext.Provider
       value={{
