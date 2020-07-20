@@ -48,6 +48,13 @@ const GithubProvider = (props: Props) => {
       const res = await axios.get(`${rootUrl}/users/${user}`);
       if (res.data) {
         setGithubUser(res.data);
+        const { login, followers_url } = res.data;
+        const repos = axios.get(`${rootUrl}/users/${login}/repos?per_page=100`);
+        const followers = axios.get(`${followers_url}?per_page=100`);
+
+        const prop = await Promise.all([repos, followers]);
+        setGithubRepos(prop[0].data);
+        setGithubFollowers(prop[1].data);
       }
     } catch (err) {
       if (err.response.data.message) {
