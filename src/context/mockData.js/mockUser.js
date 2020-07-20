@@ -28,7 +28,7 @@ export default {
   hireable: null,
   bio:
     "I thrive to design and develop ideas into project that makes life easy, solve problems and implement innovations.",
-  twitter_username: cpuram1,
+  twitter_username: "cpuram1",
   public_repos: 42,
   public_gists: 3,
   followers: 10,
