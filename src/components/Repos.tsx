@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { GithubContext } from "../context/context";
-import { Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
+import { Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts/index";
 import { calLanguage, getStarsForked } from "./utils/Languages.js";
 
 const Repos = () => {
