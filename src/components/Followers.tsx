@@ -72,7 +72,8 @@ const Wrapper = styled.article`
       margin-bottom: 0;
     }
     a {
-      color: var(--clr-grey-5);
+      font-size: 15px;
+      color: var(--clr-primary-5);
     }
   }
 `;
